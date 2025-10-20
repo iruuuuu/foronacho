@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    hola <?= $_SESSION['user']->getUsername() ?>
+    <a href="index.php?c=user&logout=1">Logout</a>
+    <a href="index.php?c=user&edit=1">Panel de usuario</a>
+
+
+    <?php if ($_SESSION['user']->getAvatar()) {
+        $img = $_SESSION['user']->getAvatar();
+    } else $img = "avatar.jpg";
+
+    echo '<img src="public/img/' . $img . '" width="50px">';
+    ?>
+
+    <h2>Temas</h2>
+
+    <?php
+    //mostrar peliculas
+
+    foreach ($threads as $thread) {
+        echo '<a href="index.php?c=thread&id=' . $thread->getId() . '">' . $thread->getName() . '</a><br>';
+    }
+    ?>
+</body>
+
+</html>

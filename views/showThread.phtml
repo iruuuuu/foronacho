@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    hola <?= $_SESSION['user']->getUsername() ?>
+    <a href="index.php?c=user&logout=1">Logout</a>
+    <a href="index.php?c=user&edit=1">Panel de usuario</a>
+
+
+    <?php if ($_SESSION['user']->getAvatar()) {
+        $img = $_SESSION['user']->getAvatar();
+    } else $img = "avatar.jpg";
+
+    echo '<img src="public/img/' . $img . '" width="50px">';
+    ?>
+
+    <h2><?php echo $thread; ?></h2>
+
+    <?php
+    echo "Iniciado por: " . $thread->getAuthor() . " el dia " . $thread->getDatetime();
+
+    echo "<br><br>";
+    foreach ($thread->getComments() as $comment) {
+        echo '<img src="public/img/' . $comment->getAuthor()->getAvatar() . '" width="50px">';
+        echo $comment->getAuthor() . " dijo: " . $comment;
+        echo "<br>(" . $comment->getDatetime() . ")";
+
+        if ($_SESSION['user']->getRoles())
+            echo "<a href='index.php?c=comment&threadId=" . $thread->getId() . "&delete=" . $comment->getId() . "'> Borrar respuesta </a>";
+        echo "<br><br>";
+
+        echo serialize($comment);
+    }
+    ?>
+
+    <h4>Publicar una respuesta</h4>
+    <form action="index.php?c=comment" method="POST">
+        <?php
+        echo '<input type="hidden" name="threadId" value="' . $_GET['id'] . '">';
+        ?>
+        <input type="text" name="content">
+        <input type="submit">
+
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Panel de usuario</h1>
+
+    hola <?= $_SESSION['user']->getUsername() ?>.<br>
+
+    <?php if ($_SESSION['user']->getAvatar()) {
+        $img = $_SESSION['user']->getAvatar();
+    } else $img = "avatar.jpg";
+
+    echo '<img src="public/img/' . $img . '" width="50px">';
+    ?>
+
+    Edita tu avatar:<br>
+    <form action="index.php?c=user&setAvatar=1" method="post" enctype="multipart/form-data">
+        <input type="file" name="avatar">
+        <input type="submit" value="Subir">
+    </form>
+</body>
+
+</html>
